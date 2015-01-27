@@ -121,7 +121,7 @@ SAT_puzzle::SAT_puzzle(String^ filename)
 				int offset = 0;
 				for (int i = 0; i < (token->Length - offset); i++)
 				{
-					//This block attempts to parse a line into a series of integers which are used to indicate which
+					//Attempts to parse a line into a series of integers which are used to indicate which
 					// of the members needs to either be true (positive) or false (negative).
 					try
 					{

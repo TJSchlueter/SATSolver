@@ -27,6 +27,8 @@ using namespace System;
 using namespace System::IO;
 using namespace System::Diagnostics;
 
+/*Struct used to store both the number of clauses satisfied and the
+* amount of time that a solve attempt took to complete.*/
 struct Solve_results
 {
 	int satisfied_clauses;
@@ -43,9 +45,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	bool run_solve_algorithm = true, file_loaded = false, load_new = true;
 	SAT_puzzle myprob;
 	
+	//Loops so long as the user wishes to solve more problems
 	while (run_solve_algorithm)
 	{
 		
+		//Only loads a new SAT problem file if the user elects to do so
 		if (load_new)
 		{
 			load_new = false;
@@ -67,7 +71,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			}
 		}
 
-		//The program will only continue if all information is successfully loaded.
+		//The program will only attempt to solve the problem if all information is successfully loaded.
 		if (file_loaded)
 		{
 			Stopwatch ^ timeKeep = gcnew Stopwatch();
@@ -98,8 +102,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		String ^ response = " ";
 
-		// Check to see if the user wishes to run the algorithm again, and if so,
-		//  whether or not they want to load a different problem to attemp to solve.
+		// Check to see if the user wishes to run a solving algorithm again
 		while (response != "y" && response != "Y" && response != "n" && response != "N")
 		{
 			Console::WriteLine("Would you like to run the solver again? y/n:");
@@ -109,9 +112,10 @@ int _tmain(int argc, _TCHAR* argv[])
 			else if (response != "n" || response != "N")
 				run_solve_algorithm = false;
 			else
-				Console::WriteLine(response + " is not a valid response.  Please you y or n.");
+				Console::WriteLine(response + " is not a valid response.  Please enter y or n.");
 		}
 		response = " ";
+		// Check to see if the user wants to load a different problem to attemp to solve.
 		while (response != "y" && response != "Y" && response != "n" && response != "N" && run_solve_algorithm)
 		{
 			Console::WriteLine("Would you also like to use a different problem? y/n:");
@@ -121,7 +125,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			else if (response != "n" || response != "N")
 				load_new = false;
 			else
-				Console::WriteLine(response + " is not a valid response.  Please you y or n.");
+				Console::WriteLine(response + " is not a valid response.  Please enter y or n.");
 		}
 	}
 	Console::ReadLine();
@@ -190,6 +194,8 @@ Solve_results runSolver(SAT_puzzle myprob)
 	Console::WriteLine("q: Quit the program");
 	String ^ selection = Console::ReadLine();
 
+	// Check user input to see which of the aforementioned options was chosen
+	// If none of the above are chosen, the user is prompted to enter a valid selection
 	while (!complete)
 	{
 		if (selection == "q" || selection == "Q")
